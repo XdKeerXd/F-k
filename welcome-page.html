@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            opacity: 0.8;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+            transform: translateY(30px);
+            opacity: 0;
+            animation: fadeIn 1s forwards 0.5s;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #4a6bfd;
+            font-weight: 700;
+        }
+
+        p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: #666;
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(to right, #4a6bfd, #a777e3);
+            color: #fff;
+            font-size: 1.1rem;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin-top: 10px;
+            border: none;
+            outline: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(to right, #3d5ce4, #9566ca);
+        }
+
+        .shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .shape {
+            position: absolute;
+            opacity: 0.2;
+            border-radius: 50%;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(10deg);
+            }
+        }
+
+        .date-time {
+            font-size: 1rem;
+            color: #888;
+            margin-top: 25px;
+            font-weight: 500;
+        }
+
+        .icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #a777e3;
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="shapes" id="shapes"></div>
+    <div class="container">
+        <div class="icon">👋</div>
+        <h1>Welcome!</h1>
+        <p>We're thrilled to have you here. This is the beginning of something amazing. Explore our site and discover all the wonderful things we have to offer.</p>
+        <button class="btn" id="welcomeBtn">Get Started</button>
+        <div class="date-time" id="dateTime"></div>
+    </div>
+
+    <script>
+        // Create animated background shapes
+        const shapes = document.getElementById('shapes');
+        const colors = ['#4a6bfd', '#a777e3', '#fd4a6b', '#4afdb5'];
+        
+        for (let i = 0; i < 15; i++) {
+            const shape = document.createElement('div');
+            shape.classList.add('shape');
+            
+            // Random properties
+            const size = Math.random() * 100 + 50;
+            const left = Math.random() * 100;
+            const top = Math.random() * 100;
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            const delay = Math.random() * 5;
+            const duration = Math.random() * 10 + 10;
+            
+            // Apply styles
+            shape.style.width = `${size}px`;
+            shape.style.height = `${size}px`;
+            shape.style.left = `${left}%`;
+            shape.style.top = `${top}%`;
+            shape.style.backgroundColor = color;
+            shape.style.animation = `float ${duration}s ease-in-out ${delay}s infinite`;
+            
+            shapes.appendChild(shape);
+        }
+
+        // Button click effect
+        const welcomeBtn = document.getElementById('welcomeBtn');
+        welcomeBtn.addEventListener('click', function() {
+            this.textContent = "Welcome Aboard!";
+            this.style.background = "linear-gradient(to right, #fd4a6b, #4afdb5)";
+            
+            // Create a confetti effect
+            for (let i = 0; i < 50; i++) {
+                createConfetti();
+            }
+        });
+
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.style.position = 'absolute';
+            confetti.style.width = '10px';
+            confetti.style.height = '10px';
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+            confetti.style.left = `${Math.random() * 100}%`;
+            confetti.style.top = '-10px';
+            confetti.style.zIndex = '1000';
+            document.body.appendChild(confetti);
+            
+            // Animate falling
+            const fallDuration = Math.random() * 3 + 2;
+            const rotation = Math.random() * 360;
+            const xShift = (Math.random() - 0.5) * 300;
+            
+            confetti.style.transition = `all ${fallDuration}s ease-out`;
+            setTimeout(() => {
+                confetti.style.transform = `translateY(${window.innerHeight}px) translateX(${xShift}px) rotate(${rotation}deg)`;
+                confetti.style.opacity = '0';
+            }, 10);
+            
+            // Remove after animation
+            setTimeout(() => {
+                confetti.remove();
+            }, fallDuration * 1000);
+        }
+
+        // Update date and time
+        function updateDateTime() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            document.getElementById('dateTime').textContent = now.toLocaleDateString('en-US', options);
+        }
+
+        updateDateTime();
+        setInterval(updateDateTime, 60000); // Update every minute
+    </script>
+</body>
+</html>
